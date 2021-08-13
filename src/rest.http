@@ -1,0 +1,15 @@
+###
+POST https://modest-shaw-b5cb04.netlify.app/.netlify/functions/parsePrice HTTP/1.1
+Content-Type: application/json
+
+{
+  "classFrom": "invalidClass"
+}
+
+###
+POST https://modest-shaw-b5cb04.netlify.app/.netlify/functions/parsePrice HTTP/1.1
+Content-Type: application/json
+
+{
+  "classFrom": ["qiwi", "yandex"]
+}
