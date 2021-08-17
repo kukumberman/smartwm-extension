@@ -30,29 +30,34 @@ export default {
       items: []
     }
   },
+  async mounted() {
+    const items = await this.fetchFromNetlify({ classFrom: this.buttons });
+    const collection = Array.isArray(items) ? items : [items];
+    this.items.push(...(collection.map((item, i) => ({ id: Date.now() + i, ...item }))));
+  },
   methods: {
     onClickRemove(id) {
       this.items = this.items.filter(item => item.id !== id);
     },
     async onClickFetch(classFrom) {
-      const item = await this.fetchFromNetlify(classFrom);
+      const item = await this.fetchFromNetlify({ classFrom });
       this.items.push({ id: Date.now(), ...item });
     },
-    async fetchFromNetlify(classFrom) {
+    async fetchFromNetlify(data) {
       const url = "https://modest-shaw-b5cb04.netlify.app/.netlify/functions/parsePrice"
       const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ classFrom }),
+        body: JSON.stringify(data),
       });
       return await response.json();
     }
   },
   computed: {
     buttons() {
-      return ["qiwi", "yandex", "qiwi1"]
+      return ["qiwi", "yandex"]
     }
   }
 }
