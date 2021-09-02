@@ -1,5 +1,6 @@
 <template>
   <div class="my-2">
+    <Loader v-if="isLoading" />
     <CardItem 
       v-for="(item, i) in items"
       :key="i"
@@ -7,53 +8,50 @@
       @remove="onClickRemove"
     />
     <div class="d-flex my-2">
-      <label
+      <FetchButton
         v-for="(btn) in buttons"
         :key="btn"
+        :title="btn"
         @click="onClickFetch(btn)"
-        type="button"
-        class="btn btn-primary flex-grow-1 mx-1"
-      >{{ btn }}</label>
+      />
     </div>
   </div>
 </template>
 
 <script>
 import CardItem from "./CardItem.vue";
+import Loader from "./Loader.vue"
+import FetchButton from "./FetchButton.vue"
+import smartwm from "../services/smartwm.js"
 
 export default {
   components: {
-    CardItem
+    CardItem, Loader, FetchButton
   },
   data() {
     return {
+      isLoading: true,
       items: []
     }
   },
   async mounted() {
-    const items = await this.fetchFromNetlify({ classFrom: this.buttons });
+    const items = await smartwm({ classFrom: this.buttons });
     const collection = Array.isArray(items) ? items : [items];
-    this.items.push(...(collection.map((item, i) => ({ id: Date.now() + i, ...item }))));
+    this.items.push(...(collection.map((item, i) => ({ id: Date.now() + i, isLoading: false, ...item }))));
+    this.isLoading = false;
   },
   methods: {
     onClickRemove(id) {
       this.items = this.items.filter(item => item.id !== id);
     },
     async onClickFetch(classFrom) {
-      const item = await this.fetchFromNetlify({ classFrom });
-      this.items.push({ id: Date.now(), ...item });
+      const id = Date.now()
+      this.items.push({ id, isLoading: true })
+
+      const data = await smartwm({ classFrom })
+      this.onClickRemove(id)
+      this.items.push({ id, isLoading: false, ...data })
     },
-    async fetchFromNetlify(data) {
-      const url = "https://modest-shaw-b5cb04.netlify.app/.netlify/functions/parsePrice"
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data),
-      });
-      return await response.json();
-    }
   },
   computed: {
     buttons() {
