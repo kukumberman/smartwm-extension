@@ -4,7 +4,7 @@
     <Spinner v-if="item.isLoading" />
     <template v-else>
       <div class="card-header d-flex justify-content-between align-items-center">
-        <span>{{ item.title }}</span>
+        <span>{{ item.data.title }}</span>
         <label
           @click="$emit('remove', item.id)"
           type="button"
@@ -12,12 +12,12 @@
         >&times;</label>
       </div>
       <div class="card-body">
-        <template v-if="item.error">
-          <p>⛔️ {{ item.error }}</p>
+        <template v-if="item.data.error">
+          <p>⛔️ {{ item.data.error }}</p>
         </template>
         <template v-else>
-          <p class="my-1">{{ item.a }}</p>
-          <p class="my-1">{{ item.b }}</p>
+          <p class="my-1">{{ item.data.a }}</p>
+          <p class="my-1">{{ item.data.b }}</p>
         </template>
       </div>
     </template>

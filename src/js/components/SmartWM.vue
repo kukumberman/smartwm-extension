@@ -37,7 +37,7 @@ export default {
   async mounted() {
     const items = await smartwm({ classFrom: this.buttons });
     const collection = Array.isArray(items) ? items : [items];
-    this.items.push(...(collection.map((item, i) => ({ id: Date.now() + i, isLoading: false, ...item }))));
+    this.items.push(...(collection.map((data, i) => ({ id: Date.now() + i, isLoading: false, data }))));
     this.isLoading = false;
   },
   methods: {
@@ -45,12 +45,20 @@ export default {
       this.items = this.items.filter(item => item.id !== id);
     },
     async onClickFetch(classFrom) {
-      const id = Date.now()
-      this.items.push({ id, isLoading: true })
+      // ! this is previous solution for vue3 (but not the best way - find by id and modify instead of deleting)
+      // const id = Date.now()
+      // this.items.push({ id, isLoading: true })
 
-      const data = await smartwm({ classFrom })
-      this.onClickRemove(id)
-      this.items.push({ id, isLoading: false, ...data })
+      // const data = await smartwm({ classFrom })
+      // this.onClickRemove(id)
+      // this.items.push({ id, isLoading: false, data })
+
+      // ! this works in vue2 but not in vue3
+      const item = { id: Date.now(), isLoading: true }
+      this.items.push(item)
+      
+      item.data = await smartwm({ classFrom })
+      item.isLoading = false
     },
   },
   computed: {
