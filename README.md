@@ -4,7 +4,20 @@
 
 Web-browser extension, that allows to view currency exchange rates of `smartwm.biz` website.
 
-Extension uses netlify serverless proxy app to prevent blocking by CORS policy.
+Extension uses [Netlify](https://www.netlify.com/products/functions/) serverless application as proxy to prevent blocking by **CORS** policy.
+
+### Showcase
+
+<table>
+  <tr>
+    <td>
+      <img src="/showcase/preview_1.png" />
+    </td>
+    <td>
+      <img src="/showcase/preview_2.png" />
+    </td>
+  </tr>
+</table>
 
 ### 🔃 Exchange directions 
 ```
