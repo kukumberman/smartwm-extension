@@ -28,8 +28,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: "popup.html",
-      template: path.resolve("public", "popup.html")
+      filename: "index.html",
+      template: path.resolve("public", "index.html")
     }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
@@ -41,7 +41,11 @@ module.exports = {
         {
           from: path.resolve("public", "icons"),
           to: path.resolve("dist", "icons")
-        }
+        },
+        {
+          from: path.resolve("public", "favicon.ico"),
+          to: path.resolve("dist")
+        },
       ]
     }),
     new VueLoaderPlugin(),
