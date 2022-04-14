@@ -2,7 +2,8 @@
   "private": true,
   "scripts": {
     "build": "webpack --mode production",
-    "watch": "npm run build -- --watch"
+    "watch": "npm run build -- --watch",
+    "build-website": "npm run build -- --env website"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
