@@ -11,7 +11,8 @@ module.exports = (env) => {
     entry: "./src/js/popup.js",
     output: {
       path: path.resolve("dist"),
-      filename: "[name].[contenthash].js"
+      filename: "[name].[contenthash].js",
+      publicPath: env.website ? "/smartwm-extension" : "/",
     },
     resolve: {
       extensions: [".js"],
