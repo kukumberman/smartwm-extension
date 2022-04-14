@@ -6,6 +6,10 @@ Web-browser extension, that allows to view currency exchange rates of `smartwm.b
 
 Extension uses [Netlify](https://www.netlify.com/products/functions/) serverless application as proxy to prevent blocking by **CORS** policy.
 
+### Try it yourself
+
+Published to gh-pages, available at https://kukumberman.github.io/smartwm-extension/
+
 ### Showcase
 
 <table>
